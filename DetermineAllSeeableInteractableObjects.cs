@@ -61,7 +61,6 @@ public class DetermineAllSeeableInteractableObjects : MonoBehaviour
             }
         }
         Array.Clear(SceneObjects, 0, SceneObjects.Length);
-        
     }
 
     // Update is called once per frame
@@ -77,11 +76,8 @@ public class DetermineAllSeeableInteractableObjects : MonoBehaviour
     /// If True -> calls the object's Subscribe method(which adds it to the IsVisibleToCamera event in EventManagent.cs)
     ///     Nested condition: is Initizialed.cs attached to object?
     ///         ->yes: then subscribe
-    ///         ->no: add Initialized.cs to object then call subscribe ........>(Initialized.Cs is disabled, currently adds InteractableShader.cs)
+    ///         ->no: add Initialized.cs to object then call subscribe 
     /// Adds object to Queue
-    /// ******************************************
-    /// InitializeInteractableObject().CS is currently disabled! due to LargeTeam Decisions and better alternatives
-    /// 
     /// </summary>
     private void DetermineViewableInteractableObjects()
     {
@@ -89,42 +85,24 @@ public class DetermineAllSeeableInteractableObjects : MonoBehaviour
 
         for (int i = 0; i < InteractableObjects.Count; i++)
         {
-            //if (IsThisCloseEnough(InteractableObjects[i]))
-            //{ 
-            //if (GeometryUtility.TestPlanesAABB(planes, InteractableObjects[i].GetComponent<Collider>().bounds))
-            //{
-            //    if (InteractableObjects[i].GetComponent<InitializeInteractableObject>() != null)
-            //    {
-            //        InteractableObjects[i].GetComponent<InitializeInteractableObject>().Subscribe();
-            //        NeedsToUnsubscribe.Enqueue(InteractableObjects[i]);
-            //    }
-            //    else
-            //    {
-            //        InteractableObjects[i].AddComponent<InitializeInteractableObject>();
-            //        InteractableObjects[i].GetComponent<InitializeInteractableObject>().Subscribe();
-            //        NeedsToUnsubscribe.Enqueue(InteractableObjects[i]);
-            //    }
-            //}
-            //}
             if (IsThisCloseEnough(InteractableObjects[i]))
-            { 
+            {
                 if (GeometryUtility.TestPlanesAABB(planes, InteractableObjects[i].GetComponent<Collider>().bounds))
                 {
-
-                    if (InteractableObjects[i].GetComponent<InteractableShader>() != null)
+                    if (InteractableObjects[i].GetComponent<InitializeInteractableObject>() != null)
                     {
-                        InteractableObjects[i].GetComponent<InteractableShader>().Subscribe();//working from here
+                        InteractableObjects[i].GetComponent<InitializeInteractableObject>().Subscribe();
                         NeedsToUnsubscribe.Enqueue(InteractableObjects[i]);
                     }
                     else
                     {
-                        InteractableObjects[i].AddComponent<InteractableShader>();
-                        InteractableObjects[i].GetComponent<InteractableShader>().Subscribe();
+                        InteractableObjects[i].AddComponent<InitializeInteractableObject>();
+                        InteractableObjects[i].GetComponent<InitializeInteractableObject>().Subscribe();
                         NeedsToUnsubscribe.Enqueue(InteractableObjects[i]);
                     }
                 }
             }
-		}
+        }
     }
 
     /// <summary> UnSubscribeFromEvents():
@@ -135,13 +113,13 @@ public class DetermineAllSeeableInteractableObjects : MonoBehaviour
     {
         for (int i = 0; i < NeedsToUnsubscribe.Count; i++)
         {
-            //NeedsToUnsubscribe.Dequeue().GetComponent<InitializeInteractableObject>().UnSubscribe();
-			NeedsToUnsubscribe.Dequeue().GetComponent<InteractableShader>().UnSubscribe();
-
+            NeedsToUnsubscribe.Dequeue().GetComponent<InitializeInteractableObject>().UnSubscribe();
 		}
 	}
+
     /// <summary>
-    /// 
+    /// determines whether an object is within the desired range
+    /// if so, draws shader
     /// </summary>
     private bool IsThisCloseEnough(GameObject go)
     {
@@ -153,7 +131,7 @@ public class DetermineAllSeeableInteractableObjects : MonoBehaviour
             withinRange = true;
         }
 
-     return withinRange;
+        return withinRange;
     }
 }
 

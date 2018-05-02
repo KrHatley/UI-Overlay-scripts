@@ -17,12 +17,12 @@ public class InitializeInteractableObject : MonoBehaviour
     /// </summary>
     private void Awake()
     {
-        //canvas = GameObject.FindObjectOfType<Canvas>();
-        //OverlaySprite = Resources.Load("SpriteOverlay",typeof(Sprite)) as Sprite;
-        //// OverlayTexture.sprite = OverlaySprite;
-        //Overlay = (GameObject)Instantiate(Resources.Load("InteractableOverlay"));
-        //Overlay.GetComponent<Image>().sprite = OverlaySprite;
-        //Overlay.transform.parent = canvas.transform;
+        canvas = GameObject.FindObjectOfType<Canvas>();
+        OverlaySprite = Resources.Load("SpriteOverlay",typeof(Sprite)) as Sprite;
+        // OverlayTexture.sprite = OverlaySprite;
+        Overlay = (GameObject)Instantiate(Resources.Load("InteractableOverlay"));
+        Overlay.GetComponent<Image>().sprite = OverlaySprite;
+        Overlay.transform.parent = canvas.transform;
     }
 
     /// <summary> Subscribe():
@@ -42,11 +42,11 @@ public class InitializeInteractableObject : MonoBehaviour
     }
 
     /// <summary> DrawOverlay():
-    /// 
+    /// Draws UI element
     /// </summary>
     private void DrawOverlay()
     {
-        //Overlay.GetComponent<RectTransform>().SetPositionAndRotation(new Vector3(this.transform.position.x+.8f, 
-        //    this.transform.position.y, this.transform.position.z), new Quaternion(0.8f,0.0f,0.8f,0.0f));
+        Overlay.GetComponent<RectTransform>().SetPositionAndRotation(new Vector3(this.transform.position.x+.8f, 
+            this.transform.position.y, this.transform.position.z), new Quaternion(0.8f,0.0f,0.8f,0.0f));
 	}
 }

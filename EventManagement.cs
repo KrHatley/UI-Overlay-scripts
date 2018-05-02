@@ -19,7 +19,7 @@ public class EventManagement : MonoBehaviour
     /// <summary> Draw():
     /// a callable function that is constantly called to activate events
     /// IsVisibleToCamera is an event that has subscribed functions
-    /// -works like a Subscribale/Unsubscribale Messenger pattern
+    /// -works like a Subscribeable/Unsubscribeable Messenger pattern
     /// </summary>
     public void Draw()
     {
